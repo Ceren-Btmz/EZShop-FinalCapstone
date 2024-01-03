@@ -40,19 +40,19 @@ public class CategoriesController {
     }
 
     // add the appropriate annotation for a get action
-    @GetMapping("{id}")
+    @GetMapping("{categoryId}")
     @PreAuthorize("permitAll()")
     public Category getById(@PathVariable int id) {
-        Category category = categoryDao.getById(id);
+            Category category = categoryDao.getById(id);
         try {
             if (category.getName() != null) {
                 return category;
             }
-        } catch (Exception ex) {
+        } catch (Exception e) {
             if (category == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category not found");
             } else {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error has occurred!");
             }
         }
         return null;
@@ -68,7 +68,6 @@ public class CategoriesController {
            var product = productDao.getById(categoryId);
 
            if (product == null)
-
                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
            return productDao.listByCategoryId(categoryId);

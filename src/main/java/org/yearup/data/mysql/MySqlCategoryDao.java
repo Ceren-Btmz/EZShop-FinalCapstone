@@ -15,8 +15,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     }
 
     @Override
-    public List<Category> getAllCategories()
-    {
+    public List<Category> getAllCategories() {
         // get all categories
         List<Category> categories = null;
         String query = "SELECT * FROM easyshop.categories;";

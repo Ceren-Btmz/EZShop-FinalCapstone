@@ -52,7 +52,7 @@ public class CategoriesController {
         }
         if (category == null)
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error has occurred!");
-        
+
         return category;
     }
 

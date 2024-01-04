@@ -6,6 +6,7 @@ import org.yearup.models.Category;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -17,21 +18,21 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     @Override
     public List<Category> getAllCategories() {
         // get all categories
-        List<Category> categories = null;
+        List<Category> categories = new ArrayList<>();
         String query = "SELECT * FROM easyshop.categories;";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
-            do {
+            while (resultSet.next()) {
                 int categoryID = resultSet.getInt("category_id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
                 categories.add(new Category(categoryID, name, description));
-            } while (resultSet.next());
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return categories;
     }
@@ -84,6 +85,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
                 if (generatedKeys.next()) {
                     int generatedID = generatedKeys.getInt(1);
                     category.setCategoryId(generatedID);
+                    return category;
                 } else {
                     throw new SQLException("Category creation failed! No ID found.");
                 }
@@ -114,7 +116,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     @Override
     public void delete(int categoryId) {
         // delete category
-        String query = "DELETE FROM Categories WHERE CategoryID = ?";
+        String query = "DELETE FROM Categories WHERE category_id = ?";
 
         try (Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(query)) {

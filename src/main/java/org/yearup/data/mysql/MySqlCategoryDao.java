@@ -19,7 +19,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     public List<Category> getAllCategories() {
         // get all categories
         List<Category> categories = new ArrayList<>();
-        String query = "SELECT * FROM easyshop.categories;";
+        String query = "SELECT * FROM categories;";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
@@ -40,7 +40,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     @Override
     public Category getById(int categoryId) {
         // get category by id
-        String query = "SELECT * FROM easyshop.categories WHERE category_id = ?";
+        String query = "SELECT * FROM categories WHERE category_id = ?";
         try (Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -61,7 +61,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     public Category create(Category category)
     {
         // create a new category
-        String query = "INSERT INTO easyshop.categories (name, description) VALUES (?, ?)";
+        String query = "INSERT INTO categories (name, description) VALUES (?, ?)";
 
         try (Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -92,7 +92,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     @Override
     public void update(int categoryId, Category category) {
         // update category
-        String query = "UPDATE easyshop.categories SET name = ? WHERE category_id = ?";
+        String query = "UPDATE categories SET name = ? WHERE category_id = ?";
 
         try (Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(query)) {

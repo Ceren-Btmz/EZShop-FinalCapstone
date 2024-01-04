@@ -40,20 +40,24 @@ public class CategoriesController {
     }
 
     // add the appropriate annotation for a get action
-    @GetMapping("{id}")
+    @GetMapping("{categoryId}")
     @PreAuthorize("permitAll()")
-    public Category getById(@PathVariable int id) {
-            Category category = null;
+    public Category getById(@PathVariable int categoryId) {
+        // get the category by id
+        Category category = categoryDao.getById(categoryId);
         try {
-            category = categoryDao.getById(id);
-
+            if (category.getName() != null) {
+                return category;
+            }
+            //  return category;
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category not found");
+            if (category == null)
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            else {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Wrong character...");
+            }
         }
-        if (category == null)
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error has occurred!");
-
-        return category;
+        return null;
     }
 
     // the url to return all products in category 1 would look like this

@@ -38,10 +38,8 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     }
 
     @Override
-    public Category getById(int categoryId)
-    {
+    public Category getById(int categoryId) {
         // get category by id
-        Category category = new Category();
         String query = "SELECT * FROM easyshop.categories WHERE category_id = ?";
         try (Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(query)) {
@@ -50,17 +48,13 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
 
         try (ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
-                category.setCategoryId(resultSet.getInt("category_id"));
-                category.setName(resultSet.getString("name"));
-                category.setDescription(resultSet.getString("description"));
-                return category;
+               return mapRow(resultSet);
             }
         }
     } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        return category;
+        return null;
     }
 
     @Override

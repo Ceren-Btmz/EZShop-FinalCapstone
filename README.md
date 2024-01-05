@@ -61,6 +61,17 @@ These stories are a fundamental component of Agile development methodologies, su
 
 ![3.gif](imgs%2F3.gif)
 
+
+# Bugs 🐞
+
+BUG 1 🐜
+
+![ES-3.png](imgs%2FES-3.png)
+
+BUG 2 🐜🐜
+
+![ES-4.png](imgs%2FES-4.png)
+
 # Future Work ➡⏲💻🖥
 
 - Enhanced User Authentication and Authorization:
